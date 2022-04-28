@@ -2,11 +2,14 @@ package com.namghjk.country;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -40,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+
+        lv_Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this,Detail_Country.class);
+                intent.putExtra("countryname",countryModelArrayList.get(i).getCountryName());
+                intent.putExtra("population",countryModelArrayList.get(i).getPopulation());
+                intent.putExtra("areainsqkm",countryModelArrayList.get(i).getAreaInSqKm());
+                intent.putExtra("flag",countryModelArrayList.get(i).getImage());
+                intent.putExtra("map",countryModelArrayList.get(i).getMapImage());
+                startActivity(intent);
+            }
+        });
     }
 
     private void addControll() {
@@ -109,11 +126,18 @@ public class MainActivity extends AppCompatActivity {
                     if(record.has("countryCode")){
                         String countryCode =  record.getString("countryCode").toLowerCase();
                         String LinkImage = "https://img.geonames.org/flags/x/"+ countryCode +".gif";
+                        String MapImage = "https://img.geonames.org/img/country/250/"+ record.getString("countryCode") +".png";
                         countryModel.setImage(LinkImage);
+                        countryModel.setMapImage(MapImage);
                         url = new URL(LinkImage);
                         connection = (HttpsURLConnection) url.openConnection();
                         Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
                         countryModel.setFlag(bitmap);
+
+                        url = new URL(MapImage);
+                        connection = (HttpsURLConnection) url.openConnection();
+                        Bitmap bitmap1 = BitmapFactory.decodeStream(connection.getInputStream());
+                        countryModel.setMap(bitmap1);
                     }
                     Log.e("LOI: ",countryModel.toString());
                     ds.add(countryModel);

@@ -6,27 +6,28 @@ import java.io.Serializable;
 
 public class CountryModel implements Serializable {
     private String Image;
+    private String MapImage;
     private String CountryName;
     private String Population;
     private String AreaInSqKm;
     private Bitmap Flag;
+    private Bitmap Map;
 
-    public CountryModel(String image, String countryName, String population, String areaInSqKm) {
-        Image = image;
-        CountryName = countryName;
-        Population = population;
-        AreaInSqKm = areaInSqKm;
-    }
 
     public CountryModel() {
     }
 
-    public String getCountryName() {
-        return CountryName;
-    }
-
-    public void setCountryName(String countryName) {
-        CountryName = countryName;
+    @Override
+    public String toString() {
+        return "CountryModel{" +
+                "Image='" + Image + '\'' +
+                ", MapImage='" + MapImage + '\'' +
+                ", CountryName='" + CountryName + '\'' +
+                ", Population='" + Population + '\'' +
+                ", AreaInSqKm='" + AreaInSqKm + '\'' +
+                ", Flag=" + Flag +
+                ", Map=" + Map +
+                '}';
     }
 
     public String getImage() {
@@ -35,6 +36,22 @@ public class CountryModel implements Serializable {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public String getMapImage() {
+        return MapImage;
+    }
+
+    public void setMapImage(String mapImage) {
+        MapImage = mapImage;
+    }
+
+    public String getCountryName() {
+        return CountryName;
+    }
+
+    public void setCountryName(String countryName) {
+        CountryName = countryName;
     }
 
     public String getPopulation() {
@@ -61,13 +78,21 @@ public class CountryModel implements Serializable {
         Flag = flag;
     }
 
-    @Override
-    public String toString() {
-        return "CountryModel{" +
-                "CountryName='" + CountryName + '\'' +
-                ", Image='" + Image + '\'' +
-                ", Population='" + Population + '\'' +
-                ", AreaInSqKm='" + AreaInSqKm + '\'' +
-                '}';
+    public Bitmap getMap() {
+        return Map;
+    }
+
+    public void setMap(Bitmap map) {
+        Map = map;
+    }
+
+    public CountryModel(String image, String mapImage, String countryName, String population, String areaInSqKm, Bitmap flag, Bitmap map) {
+        Image = image;
+        MapImage = mapImage;
+        CountryName = countryName;
+        Population = population;
+        AreaInSqKm = areaInSqKm;
+        Flag = flag;
+        Map = map;
     }
 }
