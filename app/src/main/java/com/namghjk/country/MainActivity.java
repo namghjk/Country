@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,12 +49,11 @@ public class MainActivity extends AppCompatActivity {
         lv_Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CountryModel country = countryModelArrayList.get(i);
                 Intent intent = new Intent(MainActivity.this,Detail_Country.class);
-                intent.putExtra("countryname",countryModelArrayList.get(i).getCountryName());
-                intent.putExtra("population",countryModelArrayList.get(i).getPopulation());
-                intent.putExtra("areainsqkm",countryModelArrayList.get(i).getAreaInSqKm());
-                intent.putExtra("flag",countryModelArrayList.get(i).getImage());
-                intent.putExtra("map",countryModelArrayList.get(i).getMapImage());
+
+                intent.putExtra("country",(Serializable) country);
+
                 startActivity(intent);
             }
         });

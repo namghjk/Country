@@ -46,32 +46,13 @@ public class Detail_Country extends AppCompatActivity {
     }
 
     private void Data() {
-        String countryName = getIntent().getStringExtra("countryname");
-        String population = getIntent().getStringExtra("population");
-        String areainsqkm = getIntent().getStringExtra("areainsqkm");
-        String flag = getIntent().getStringExtra("flag");
-        String map = getIntent().getStringExtra("map");
+        CountryModel country = (CountryModel) getIntent().getParcelableExtra("country");
 
-        Toast.makeText(Detail_Country.this,map,Toast.LENGTH_SHORT);
-
-       tv_CountryName.setText(countryName);
-       tv_Population.setText(population);
-       tv_AreaInSqKM.setText(areainsqkm);
+       tv_CountryName.setText(country.getCountryName());
+       tv_Population.setText(country.getPopulation());
+       tv_AreaInSqKM.setText(country.getAreaInSqKm());
 
 
-        try {
-            URL url = new URL(flag);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
-            img_Flag.setImageBitmap(bitmap);
-
-            URL url1 = new URL(map);
-            HttpsURLConnection connection1 = (HttpsURLConnection) url1.openConnection();
-            Bitmap bitmap1 = BitmapFactory.decodeStream(connection1.getInputStream());
-            img_Map.setImageBitmap(bitmap1);
-        } catch (Exception e){
-            Log.e("LOI" ,e.toString());
-        }
 
 
 
