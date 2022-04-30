@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<CountryModel> countryModelArrayList,countryModelArrayListLazy;
     CountryAdapter countryAdapter;
     ImageView loadingImage;
+    private  int maxCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
         countryAdapter = new CountryAdapter(MainActivity.this,R.layout.country_item,countryModelArrayList);
         lv_Country.setAdapter(countryAdapter);
         countryAdapter.notifyDataSetChanged();
-        CountrytTask countrytTask = new CountrytTask();
-        countrytTask.execute();
         loadingview = findViewById(R.id.loading);
         loadingImage = findViewById(R.id.loadingImg);
+        CountrytTask countrytTask = new CountrytTask();
+        countrytTask.execute();
 
         lv_Country.setVisibility(View.GONE);
         loadingview.setVisibility(View.VISIBLE);
@@ -151,6 +152,13 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(countryModels);
             countryAdapter.clear();
             countryAdapter.addAll(countryModels);
+
+            maxCount =  countryModelArrayList.size();
+
+            LazyLoad();
+
+            lv_Country.setVisibility(View.VISIBLE);
+            loadingview.setVisibility(View.GONE);
 
 
         }
