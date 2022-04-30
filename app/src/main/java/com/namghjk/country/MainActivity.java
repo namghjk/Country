@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv_Country;
     ArrayList<CountryModel> countryModelArrayList;
     CountryAdapter countryAdapter;
+    ImageView loadingImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         CountrytTask countrytTask = new CountrytTask();
         countrytTask.execute();
         loadingview = findViewById(R.id.loading);
+        loadingImage = findViewById(R.id.loadingImg);
     }
 
     class CountrytTask extends AsyncTask<Void,Void,ArrayList<CountryModel>>{
