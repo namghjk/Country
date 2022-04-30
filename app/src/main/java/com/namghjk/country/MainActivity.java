@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -127,19 +129,10 @@ public class MainActivity extends AppCompatActivity {
                         String countryCode =  record.getString("countryCode").toLowerCase();
                         String LinkImage = "https://img.geonames.org/flags/x/"+ countryCode +".gif";
                         String MapImage = "https://img.geonames.org/img/country/250/"+ record.getString("countryCode") +".png";
-                        countryModel.setImage(LinkImage);
+                        countryModel.setFlagImage(LinkImage);
                         countryModel.setMapImage(MapImage);
-                        url = new URL(LinkImage);
-                        connection = (HttpsURLConnection) url.openConnection();
-                        Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
-                        countryModel.setFlag(bitmap);
-
-                        url = new URL(MapImage);
-                        connection = (HttpsURLConnection) url.openConnection();
-                        Bitmap bitmap1 = BitmapFactory.decodeStream(connection.getInputStream());
-                        countryModel.setMap(bitmap1);
                     }
-                    Log.e("LOI: ",countryModel.toString());
+                    Log.e("Country: ",countryModel.toString());
                     ds.add(countryModel);
                 }
 

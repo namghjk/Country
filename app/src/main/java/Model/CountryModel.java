@@ -6,37 +6,30 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class CountryModel implements Serializable {
-    private String Image;
+    private String FlagImage;
     private String MapImage;
     private String CountryName;
     private String Population;
     private String AreaInSqKm;
-    private Bitmap Flag;
-    private Bitmap Map;
 
 
     public CountryModel() {
     }
 
-    @Override
-    public String toString() {
-        return "CountryModel{" +
-                "Image='" + Image + '\'' +
-                ", MapImage='" + MapImage + '\'' +
-                ", CountryName='" + CountryName + '\'' +
-                ", Population='" + Population + '\'' +
-                ", AreaInSqKm='" + AreaInSqKm + '\'' +
-                ", Flag=" + Flag +
-                ", Map=" + Map +
-                '}';
+    public CountryModel(String flagImage, String mapImage, String countryName, String population, String areaInSqKm) {
+        FlagImage = flagImage;
+        MapImage = mapImage;
+        CountryName = countryName;
+        Population = population;
+        AreaInSqKm = areaInSqKm;
     }
 
-    public String getImage() {
-        return Image;
+    public String getFlagImage() {
+        return FlagImage;
     }
 
-    public void setImage(String image) {
-        Image = image;
+    public void setFlagImage(String flagImage) {
+        FlagImage = flagImage;
     }
 
     public String getMapImage() {
@@ -71,29 +64,14 @@ public class CountryModel implements Serializable {
         AreaInSqKm = areaInSqKm;
     }
 
-    public Bitmap getFlag() {
-        return Flag;
-    }
-
-    public void setFlag(Bitmap flag) {
-        Flag = flag;
-    }
-
-    public Bitmap getMap() {
-        return Map;
-    }
-
-    public void setMap(Bitmap map) {
-        Map = map;
-    }
-
-    public CountryModel(String image, String mapImage, String countryName, String population, String areaInSqKm, Bitmap flag, Bitmap map) {
-        Image = image;
-        MapImage = mapImage;
-        CountryName = countryName;
-        Population = population;
-        AreaInSqKm = areaInSqKm;
-        Flag = flag;
-        Map = map;
+    @Override
+    public String toString() {
+        return "CountryModel{" +
+                "FlagImage='" + FlagImage + '\'' +
+                ", MapImage='" + MapImage + '\'' +
+                ", CountryName='" + CountryName + '\'' +
+                ", Population='" + Population + '\'' +
+                ", AreaInSqKm='" + AreaInSqKm + '\'' +
+                '}';
     }
 }
