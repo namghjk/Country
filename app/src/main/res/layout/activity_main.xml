@@ -23,6 +23,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/LvCountry"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/loadingImg"
+            android:src="@drawable/loading"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

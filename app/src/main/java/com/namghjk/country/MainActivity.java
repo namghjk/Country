@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +33,8 @@ import Apdapter.CountryAdapter;
 import Model.CountryModel;
 
 public class MainActivity extends AppCompatActivity {
-    
+
+    LinearLayout loadingview;
     ListView lv_Country;
     ArrayList<CountryModel> countryModelArrayList;
     CountryAdapter countryAdapter;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         countryAdapter.notifyDataSetChanged();
         CountrytTask countrytTask = new CountrytTask();
         countrytTask.execute();
+        loadingview = findViewById(R.id.loading);
     }
 
     class CountrytTask extends AsyncTask<Void,Void,ArrayList<CountryModel>>{
