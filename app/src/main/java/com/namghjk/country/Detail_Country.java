@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -46,11 +48,15 @@ public class Detail_Country extends AppCompatActivity {
     }
 
     private void Data() {
-        CountryModel country = (CountryModel) getIntent().getParcelableExtra("country");
+        CountryModel country = (CountryModel) getIntent().getSerializableExtra("country");
+        if(country!=null) {
+            tv_CountryName.setText(country.getCountryName());
+            tv_Population.setText(country.getPopulation());
+            tv_AreaInSqKM.setText(country.getAreaInSqKm());
+            Picasso.with(this).load(country.getFlagImage()).into(img_Flag);
+            Picasso.with(this).load(country.getMapImage()).into(img_Map);
+        }
 
-       tv_CountryName.setText(country.getCountryName());
-       tv_Population.setText(country.getPopulation());
-       tv_AreaInSqKM.setText(country.getAreaInSqKm());
 
 
 

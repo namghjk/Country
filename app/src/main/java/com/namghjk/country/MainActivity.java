@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 CountryModel country = countryModelArrayList.get(i);
                 Intent intent = new Intent(MainActivity.this,Detail_Country.class);
 
-                intent.putExtra("country",(Serializable) country);
+                intent.putExtra("country", country);
 
                 startActivity(intent);
             }
