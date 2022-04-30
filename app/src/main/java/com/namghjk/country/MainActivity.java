@@ -5,10 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Interpolator;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,9 +41,10 @@ import Model.CountryModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int ITEM_COUNT_LAZY = 5;
     LinearLayout loadingview;
     ListView lv_Country;
-    ArrayList<CountryModel> countryModelArrayList;
+    ArrayList<CountryModel> countryModelArrayList,countryModelArrayListLazy;
     CountryAdapter countryAdapter;
     ImageView loadingImage;
 
@@ -52,21 +59,60 @@ public class MainActivity extends AppCompatActivity {
 
     private void addEvents() {
 
+        lv_Country.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem+ visibleItemCount == totalItemCount && totalItemCount!=0){
+                    LazyLoad();
+                }
+
+            }
+        });
+
         lv_Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CountryModel country = countryModelArrayList.get(i);
-                Intent intent = new Intent(MainActivity.this,Detail_Country.class);
-
-                intent.putExtra("country", country);
-
-                startActivity(intent);
+                OnItemClick(i);
             }
         });
+
+
+    }
+
+    private void OnItemClick(int i){
+        CountryModel country = countryModelArrayList.get(i);
+        Intent intent = new Intent(MainActivity.this,Detail_Country.class);
+
+        intent.putExtra("country", country);
+
+        startActivity(intent);
+    }
+
+    private void LazyLoad(){
+        if(countryModelArrayList.size()==0){
+            return;
+        }
+        int temp = 0;
+        for(int i = 0; i < countryModelArrayList.size(); i++){
+            if(temp == ITEM_COUNT_LAZY){
+                return;
+            }
+            CountryModel countrySelected = countryModelArrayList.get(i);
+            countryModelArrayListLazy.add(countrySelected);
+            countryModelArrayList.remove(i);
+            temp++;
+        }
+        countryAdapter.notifyDataSetChanged();
     }
 
     private void addControll() {
         countryModelArrayList = new ArrayList<>();
+        countryModelArrayListLazy = new  ArrayList<>();
         lv_Country = findViewById(R.id.LvCountry);
         countryAdapter = new CountryAdapter(MainActivity.this,R.layout.country_item,countryModelArrayList);
         lv_Country.setAdapter(countryAdapter);
@@ -75,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
         countrytTask.execute();
         loadingview = findViewById(R.id.loading);
         loadingImage = findViewById(R.id.loadingImg);
+
+        lv_Country.setVisibility(View.GONE);
+        loadingview.setVisibility(View.VISIBLE);
     }
 
     class CountrytTask extends AsyncTask<Void,Void,ArrayList<CountryModel>>{
@@ -83,6 +132,18 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             countryAdapter.clear();
+
+            RotateAnimation rotateAnimation = new RotateAnimation(
+                    0,
+                    180,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f
+            );
+            rotateAnimation.setDuration(3000);
+            rotateAnimation.setInterpolator(new LinearInterpolator());
+            loadingImage.startAnimation(rotateAnimation);
         }
 
         @Override
@@ -90,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(countryModels);
             countryAdapter.clear();
             countryAdapter.addAll(countryModels);
+
+
         }
 
         @Override
