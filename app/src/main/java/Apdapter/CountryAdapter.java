@@ -52,7 +52,8 @@ public class CountryAdapter extends ArrayAdapter<CountryModel> {
         CountryName.setText(countryModel.getCountryName());
         Population.setText(countryModel.getPopulation());
         AreaInSqKM.setText(countryModel.getAreaInSqKm());
-        Picasso.with(context).load(countryModel.getFlagImage()).into(Flag);
+
+        Picasso.get().load(countryModel.getFlagImage()).into(Flag);
 
         return convertView;
     }

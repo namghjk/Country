@@ -53,8 +53,9 @@ public class Detail_Country extends AppCompatActivity {
             tv_CountryName.setText(country.getCountryName());
             tv_Population.setText(country.getPopulation());
             tv_AreaInSqKM.setText(country.getAreaInSqKm());
-            Picasso.with(this).load(country.getFlagImage()).into(img_Flag);
-            Picasso.with(this).load(country.getMapImage()).into(img_Map);
+
+            Picasso.get().load(country.getFlagImage()).into(img_Flag);
+            Picasso.get().load(country.getMapImage()).into(img_Map);
         }
 
 

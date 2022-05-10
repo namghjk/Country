@@ -172,21 +172,21 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<CountryModel> doInBackground(Void... voids) {
             ArrayList<CountryModel> ds = new ArrayList<>();
             try {
-                URL url = new URL("https://www.geonames.org/countryInfoJSON?username=ngiao789");
-                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+                URL url = new URL("http://api.geonames.org/countryInfoJSON?username=btandroid2");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(),"UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
                 StringBuilder builder = new StringBuilder();
                 String line = bufferedReader.readLine();
-                while (line!=null){
+                while (line != null) {
                     builder.append(line);
                     line = bufferedReader.readLine();
                 }
+
                 JSONObject jsonObject = new JSONObject(builder.toString());
                 JSONArray jsonArray = jsonObject.getJSONArray("geonames");
 
-                Log.e("123", String.valueOf(jsonArray.length()));
 
                 for (int i = 0; i < jsonArray.length(); i++){
 
@@ -204,8 +204,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(record.has("countryCode")){
                         String countryCode =  record.getString("countryCode").toLowerCase();
-                        String LinkImage = "https://img.geonames.org/flags/x/"+ countryCode +".gif";
-                        String MapImage = "https://img.geonames.org/img/country/250/"+ record.getString("countryCode") +".png";
+                        String LinkImage = "http://img.geonames.org/flags/x/"+ countryCode +".gif";
+                        String MapImage = "http://img.geonames.org/img/country/250/"+ record.getString("countryCode") +".png";
                         countryModel.setFlagImage(LinkImage);
                         countryModel.setMapImage(MapImage);
                     }
