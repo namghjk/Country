@@ -57,11 +57,5 @@ public class Detail_Country extends AppCompatActivity {
             Picasso.get().load(country.getFlagImage()).into(img_Flag);
             Picasso.get().load(country.getMapImage()).into(img_Map);
         }
-
-
-
-
-
-
     }
 }
